@@ -15,9 +15,9 @@ struct Aluno{
 void inserirAluno(vector<Aluno> &alunos, int nAluno);//Insere um aluno e suas notas
 void listarAlunos(vector<Aluno> alunos);//lista nome, nota1, nota2. Mais pode ser implementado para listar media.
 void calcularMedia(vector<Aluno>&alunos); //A ideia era usar para inseri a medias de todos os alunos.Mais ṕode ser implementado ou criado outra função para media individual por exemplo. 
-int buscarAluno(vector<Aluno>&alunos, string nome);//retona o indice do aluno
+int buscarAluno(vector<Aluno>&alunos);//retona o indice do aluno
 void alterarAluno(vector<Aluno>&alunos);//Precisa atualizar a media quando atualizar a nota? Devo criar uma função para isso?
-void exluirAluno(vector<Aluno> &alunos, string nome);//Precisa reordenar? Mesmo que eu exluia uma valor de uma lista ordenada ela continua ordenada. A esta está ordenada antes de excluir? 
+void excluirAluno(vector<Aluno> &alunos);//Precisa reordenar? Mesmo que eu exluia uma valor de uma lista ordenada ela continua ordenada. A esta está ordenada antes de excluir? 
 void bubblesort(vector<Aluno> &alunos);//ordenar em ordem lexografica.
 void incluirParaTeste(vector<Aluno> &alunos);//Função que insere alguns alunos e suas notas
 int main(){
@@ -44,18 +44,27 @@ int main(){
             else{
 
                 // //Utilizei essa sequencia para realizar testes
-                // incluirParaTeste(alunos);
+               // incluirParaTeste(alunos);
 
-                // cout << TRACO << endl;
-                // cout << "Ordem que foi inserido:" << endl;
-                // cout << TRACO << endl;
-                // listarAlunos(alunos);
-                // bubblesort(alunos);
+                cout << TRACO << endl;
+                cout << "Ordem que foi inserido:" << endl;
+                cout << TRACO << endl;
+                listarAlunos(alunos);
+                bubblesort(alunos);
 
-                // cout << TRACO << endl;
-                // cout << "Ordenado:" << endl;
-                // cout << TRACO << endl;
-                // listarAlunos(alunos);
+                cout << TRACO << endl;
+                cout << "Ordenado:" << endl;
+                cout << TRACO << endl;
+                listarAlunos(alunos);
+
+                cout << TRACO << endl;
+                cout << "Excluir aluno";
+                cout << TRACO << endl;
+                excluirAluno(alunos);
+                cout << TRACO << endl;
+                listarAlunos(alunos);
+
+
                 // //Utilizei essa sequencia para realizar testes
                 continuar=false;
                 break;
@@ -128,47 +137,48 @@ void bubblesort(vector<Aluno> &alunos){
         }
     }
 }
-void incluirParaTeste(vector<Aluno> &alunos){
-    Aluno novo_aluno;
-    //---------------Primeiro Aluno----------------
-    novo_aluno.nome = "Daniel Oliveira da Silva";
-    novo_aluno.nota1 = 8.3;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
-    alunos.push_back(novo_aluno);//inserção.
-    //--------------------Fim---------------------
+// // void incluirParaTeste(vector<Aluno> &alunos){
+//     Aluno novo_aluno;
+//     //---------------Primeiro Aluno----------------
+//     novo_aluno.nome = "Daniel Oliveira da Silva";
+//     novo_aluno.nota1 = 8.3;
+//     novo_aluno.nota2 = 7.4;
+//     novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
+//     alunos.push_back(novo_aluno);//inserção.
+//     //--------------------Fim---------------------
 
-    //---------------Segunto Aluno----------------
-    novo_aluno.nome = "Leonardo Garcia";
-    novo_aluno.nota1 = 9.3;
-    novo_aluno.nota2 = 8.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
-    alunos.push_back(novo_aluno);//inserção.
-    //--------------------Fim---------------------
+//     //---------------Segunto Aluno----------------
+//     novo_aluno.nome = "Leonardo Garcia";
+//     novo_aluno.nota1 = 9.3;
+//     novo_aluno.nota2 = 8.4;
+//     novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
+//     alunos.push_back(novo_aluno);//inserção.
+//     //--------------------Fim---------------------
 
-    //---------------Terceiro Aluno---------------
-    novo_aluno.nome = "Lorena Andrade";
-    novo_aluno.nota1 = 9.8;
-    novo_aluno.nota2 = 6.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
-    alunos.push_back(novo_aluno);//inserção.
-    //--------------------Fim--------------------
+//     //---------------Terceiro Aluno---------------
+//     novo_aluno.nome = "Lorena Andrade";
+//     novo_aluno.nota1 = 9.8;
+//     novo_aluno.nota2 = 6.4;
+//     novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
+//     alunos.push_back(novo_aluno);//inserção.
+//     //--------------------Fim--------------------
 
-    //---------------Quarto Aluno----------------
-    novo_aluno.nome = "Carlos Andre";
-    novo_aluno.nota1 = 8.8;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
-    alunos.push_back(novo_aluno);//inserção.
-    //--------------------Fim---------------------
+//     //---------------Quarto Aluno----------------
+//     novo_aluno.nome = "Carlos Andre";
+//     novo_aluno.nota1 = 8.8;
+//     novo_aluno.nota2 = 7.4;
+//     novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2)/2;
+//     alunos.push_back(novo_aluno);//inserção.
+//     //--------------------Fim---------------------
 
-}
+// }
 
-int buscarAluno(vector<Aluno>&alunos, string nome){
+int buscarAluno(vector<Aluno>&alunos){
 
     string nome_aluno;
     
     cout << "Insira o nome do aluno que deseja localizar: ";
+    cin.ignore();
     getline(cin, nome_aluno);
 
     for(int i = 0; i < alunos.size() ; i++ ){
@@ -182,9 +192,9 @@ cout << "Aluno não encontrado." << endl;
 return -1;
 }
 
-void exluirAluno(vector<Aluno> &alunos, string nome){
+void excluirAluno(vector<Aluno> &alunos){
 
-    int indice = buscarAluno(alunos, nome);
+    int indice = buscarAluno(alunos);
 
     if (indice != -1){
         alunos.erase(alunos.begin() + indice);
