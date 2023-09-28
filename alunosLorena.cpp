@@ -17,7 +17,7 @@ int main() {
 
     char resposta;
     int quantidadeMaxima;
-    int n = 0;
+    int quantidadeAlunos = 0;
     bool continuar;
 
     string nome;
@@ -29,11 +29,11 @@ int main() {
 
     do
     {
-        if (n < quantidadeMaxima){
-            n++;
+        if (quantidadeAlunos < quantidadeMaxima){
+            quantidadeAlunos++;
             do
             {
-                cout << "Digite o nome do aluno " << n << ":" << endl;
+                cout << "Digite o nome do aluno " << quantidadeAlunos << ":" << endl;
                 cin.ignore();
                 getline(cin, nome);
 
