@@ -11,7 +11,6 @@ struct Aluno{
    double media;
 };
 
-void systemPause();
 bool inserirAluno(vector<Aluno> &alunos, int &limite, Aluno aluno);
 void interfaceAluno(vector<Aluno> &alunos);
 
@@ -26,9 +25,9 @@ int main(){
 
 void interfaceAluno(vector<Aluno> &alunos) {
     Aluno aluno;
-    int limite;
+    int limite = 0;
     char opcao;
-    int tamanhoAtual = 0;
+    int tamanhoAtual = -1;
     bool alunoInserido = false;
 
     do
@@ -41,7 +40,7 @@ void interfaceAluno(vector<Aluno> &alunos) {
         
         if (tamanhoAtual < limite && (opcao == 's' || opcao == 'S'))
         {
-            if (tamanhoAtual == 0)
+            if (tamanhoAtual <= 0)
             {
                 cout << "\n\nInforme um limite de alunos: ";
                 cin >> limite;
@@ -51,10 +50,10 @@ void interfaceAluno(vector<Aluno> &alunos) {
             cin.ignore();
             getline(cin, aluno.nome);
 
-            cout << "\n\nDigite a nota 1: ";
+            cout << "\nDigite a nota 1: ";
             cin >> aluno.nota1;
 
-            cout << "\n\nDigite a nota 2: ";
+            cout << "\nDigite a nota 2: ";
             cin >> aluno.nota2;
             
             alunoInserido = inserirAluno(alunos, limite, aluno); 
@@ -67,16 +66,15 @@ void interfaceAluno(vector<Aluno> &alunos) {
             else 
             {
                 cout << "\n\nFalha ao inserir aluno.\n";
-                systemPause();
             }
-        }
-        else if (tamanhoAtual >= limite)
-        {
-            cout << "\n\nLimite de alunos alcançado.";
-            systemPause();
         }
         
     } while (tamanhoAtual < limite && (opcao == 's' || opcao == 'S'));
+
+    if (tamanhoAtual >= limite)
+    {
+        cout << "\n\nLimite de alunos alcançado.\n";
+    }
 }
 
 bool inserirAluno(vector<Aluno> &alunos, int &limite, Aluno aluno) {
@@ -91,10 +89,4 @@ bool inserirAluno(vector<Aluno> &alunos, int &limite, Aluno aluno) {
     }
 
     return alunoInserido;
-}
-
-void systemPause() {
-    cout << "\n\nPressione ENTER para continuar...\n";
-    cin.sync();
-    cin.get();
 }
