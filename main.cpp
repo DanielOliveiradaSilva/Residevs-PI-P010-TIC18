@@ -2,7 +2,7 @@
 #include <vector>
 #include <string>
 #include <iomanip>
-#define TRACO "-----------------------------------------------------------------------------"
+#define TRACO "---------------------------------------------------------------------------------------------------"
 using namespace std;
 
 // Estrutura https://drive.google.com/file/d/1DOSEwaityLckkWh3SqNXxnqVoSlRgQBL/view?usp=sharing
@@ -30,6 +30,23 @@ int main()
     bool continuar;
     vector<Aluno> alunos;
 
+    Aluno aluno1;
+    Aluno aluno2;
+
+    aluno1.nome = "Carlos";
+    aluno1.nota1 = 7;
+    aluno1.nota2 = 5;
+    aluno1.media = (aluno1.nota1 + aluno1.nota2) / 2;
+
+    aluno2.nome = "Maria";
+    aluno2.nota1 = 10;
+    aluno2.nota2 = 5;
+    aluno2.media = (aluno2.nota1 + aluno2.nota2) / 2;
+
+    alunos.push_back(aluno1);
+    alunos.push_back(aluno2);
+
+/*
     cout << "Defina a quantidade máxima de alunos: " << endl;
     cin >> quantidadeMaxima;
 
@@ -83,6 +100,9 @@ int main()
         }
 
     } while (continuar);
+    */
+
+   alterarAluno(alunos);
 
     return 0;
 }
@@ -113,11 +133,16 @@ void inserirAluno(vector<Aluno> &alunos, int nAluno)
 }
 void listarAlunos(const vector<Aluno> alunos)
 {
+    string situacao = "";
+
     cout << TRACO << endl;
-    cout << left << setw(40) << "NOME" << setw(16) << "NOTA 1" << setw(16) << "NOTA 2" << endl;
+    cout << left << setw(40) << "NOME" << setw(16) << "NOTA 1" << setw(16) << "NOTA 2" << setw(16) << "MEDIA"  << setw(16) << "SITUAÇÃO" << endl;
     cout << TRACO << endl;
-    for (const Aluno &aluno : alunos)
-        cout << left << setw(40) << aluno.nome << setw(16) << setprecision(2) << aluno.nota1 << setw(16) << setprecision(2) << aluno.nota2 << endl;
+
+    for (const Aluno &aluno : alunos) {
+        situacao = aluno.media < 7 ? "REPROVADO" : "APROVADO";
+        cout << left << setw(40) << aluno.nome << setw(16) << setprecision(2) << aluno.nota1 << setw(16) << setprecision(2) << aluno.nota2 << setw(16) << setprecision(2) << aluno.media << setw(16) << situacao << endl;
+    }
 
     cout << TRACO << endl;
     cout << endl;
@@ -232,4 +257,63 @@ void excluirAluno(vector<Aluno> &alunos)
             para = true;
         }
     } while (para == false);
+}
+
+void alterarAluno(vector<Aluno> &alunos) {
+    char sair, opcao;
+    string nome;
+    Aluno aluno;
+    int index;
+
+    do
+    {
+        listarAlunos(alunos);
+        cout << "\n\nDeseja alterar alguma nota? ";
+        cin >> sair;
+
+        if (sair == 's')
+        {
+            cout << "\n\nInforme o nome do aluno que deseja alterar: ";
+            cin >> nome;
+
+            index =  buscarAluno(alunos);
+            if (index >= 0)
+            {
+                aluno = alunos[index];
+                cout << "\n\nAluno: " << aluno.nome << endl;
+                cout << "\nNota 1: " << aluno.nota1 << endl;
+                cout << "\nNota 2: " << aluno.nota2 << endl;
+
+                cout << "\n\n[ 1 ] Alterar primeira nota\n";
+                cout << "\n[ 2 ] Alterar segunda nota\n";
+                cout << "\n[ 0 ] Nenhuma nota\n";
+
+                cout << "\nOpção: ";
+                cin >> opcao;
+
+                switch (opcao)
+                {
+                    case 1:
+                        cout << "\n\nNota 1: ";
+                        cin >> aluno.nota1;
+                        break;
+
+                    case 2:
+                        cout << "\n\nNota 2: ";
+                        cin >> aluno.nota2;
+                        break;
+                
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                cout << "Aluno não encontrado." << endl;
+            }
+            
+        }
+        
+    } while (sair == 's' || sair == 'S');
+    
 }
