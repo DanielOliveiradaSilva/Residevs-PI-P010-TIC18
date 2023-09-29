@@ -30,22 +30,6 @@ int main()
     bool continuar;
     vector<Aluno> alunos;
 
-    Aluno aluno1;
-    Aluno aluno2;
-
-    aluno1.nome = "Carlos";
-    aluno1.nota1 = 7;
-    aluno1.nota2 = 5;
-    aluno1.media = (aluno1.nota1 + aluno1.nota2) / 2;
-
-    aluno2.nome = "Maria";
-    aluno2.nota1 = 10;
-    aluno2.nota2 = 5;
-    aluno2.media = (aluno2.nota1 + aluno2.nota2) / 2;
-
-    alunos.push_back(aluno1);
-    alunos.push_back(aluno2);
-
 /*
     cout << "Defina a quantidade máxima de alunos: " << endl;
     cin >> quantidadeMaxima;
