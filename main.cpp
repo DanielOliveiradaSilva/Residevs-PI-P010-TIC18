@@ -15,12 +15,13 @@ struct Aluno
 };
 void inserirAluno(vector<Aluno> &alunos, int nAluno); // Insere um aluno e suas notas
 void listarAlunos(vector<Aluno> alunos);              // lista nome, nota1, nota2. Mais pode ser implementado para listar media.
-void calcularMedia(vector<Aluno> &alunos);            // A ideia era usar para inseri a medias de todos os alunos.Mais ṕode ser implementado ou criado outra função para media individual por exemplo.
 int buscarAluno(vector<Aluno> &alunos);               // retona o indice do aluno
 void alterarAluno(vector<Aluno> &alunos);             // Precisa atualizar a media quando atualizar a nota? Devo criar uma função para isso?
 void excluirAluno(vector<Aluno> &alunos);             // Precisa reordenar? Mesmo que eu exluia uma valor de uma lista ordenada ela continua ordenada. A esta está ordenada antes de excluir?
 void bubblesort(vector<Aluno> &alunos);               // ordenar em ordem lexografica.
 void incluirParaTeste(vector<Aluno> &alunos);         // Função que insere alguns alunos e suas notas
+double calcularMediaIndividual(Aluno aluno);          // A ideia era usar para inseri a medias de todos os alunos.Mais ṕode ser implementado ou criado outra função para media individual por exemplo.
+void calcularMediaGeral(vector<Aluno> &alunos);       // calcular e alterar a média de todos os alunos
 int main()
 {
     // Fluxograma do algoritmo  https://drive.google.com/file/d/1hmIH267o7IIGC-jx0_fUVAD5jitPDvvV/view
@@ -55,6 +56,44 @@ int main()
             continuar = false;
             break;
         }
+
+
+    } while (continuar);
+
+    // Excluir aluno
+    continuar = true;
+
+    do
+    {
+
+        cout << "Deseja excluir algum alunos? (s/n)?: " << endl;
+        cin >> resposta;
+        if (resposta == 's' || resposta == 'S')
+        {
+            cout << "Insira o nome do aluno que Excluir: ";
+            excluirAluno(alunos);
+        }
+        else
+        {
+            continuar = false;
+        }
+
+    } while (continuar);
+
+    // listar
+    calcularMediaGeral(alunos);
+    listarAlunos(alunos);
+
+    // alterar
+    continuar = true;
+    do
+    {
+        cout << "\n\nDeseja alterar alguma nota? (s/n): ";
+        cin >> resposta;
+        if (resposta == 's' || resposta == 'S')
+        {
+
+
 
     } while (continuar);
 
@@ -124,6 +163,7 @@ void inserirAluno(vector<Aluno> &alunos, int nAluno)
     novoAluno.nome = nome;
     novoAluno.nota1 = nota1;
     novoAluno.nota2 = nota2;
+    novoAluno.media = calcularMediaIndividual(novoAluno);
     alunos.push_back(novoAluno);
 }
 void listarAlunos(const vector<Aluno> alunos)
@@ -283,11 +323,19 @@ void alterarAluno(vector<Aluno> &alunos)
                 cout << "\n\nNota 1: ";
                 cin >> aluno.nota1;
 
+                alunos[index].nota1 = aluno.nota1;
+
+
                 break;
 
             case 2:
                 cout << "\n\nNota 2: ";
                 cin >> aluno.nota2;
+
+                alunos[index].nota2 = aluno.nota2;
+
+
+                
                 break;
 
             default:
@@ -296,9 +344,27 @@ void alterarAluno(vector<Aluno> &alunos)
             }
         } while (sair);
 
+
+        alunos[index].media = calcularMediaIndividual(aluno);   
+
+
     }
     else
     {
         cout << "Aluno não encontrado." << endl;
     }
 }
+
+double calcularMediaIndividual(Aluno aluno) 
+{
+    aluno.media = (aluno.nota1 + aluno.nota2) / 2;
+
+    return aluno.media;
+};
+
+void calcularMediaGeral(vector<Aluno> &alunos) 
+{
+    for ( Aluno aluno: alunos ) {
+        aluno.media = (aluno.nota1 + aluno.nota2) / 2;
+    }
+};
