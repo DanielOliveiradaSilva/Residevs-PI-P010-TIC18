@@ -57,6 +57,7 @@ int main()
             break;
         }
 
+
     } while (continuar);
 
     // Excluir aluno
@@ -81,6 +82,42 @@ int main()
 
     // listar
     calcularMediaGeral(alunos);
+    listarAlunos(alunos);
+
+    // alterar
+    continuar = true;
+    do
+    {
+        cout << "\n\nDeseja alterar alguma nota? (s/n): ";
+        cin >> resposta;
+        if (resposta == 's' || resposta == 'S')
+        {
+
+
+
+    } while (continuar);
+
+    // Excluir aluno
+    continuar = true;
+
+    do
+    {
+
+        cout << "Deseja excluir algum alunos? (s/n)?: " << endl;
+        cin >> resposta;
+        if (resposta == 's' || resposta == 'S')
+        {
+            cout << "Insira o nome do aluno que Excluir: ";
+            excluirAluno(alunos);
+        }
+        else
+        {
+            continuar = false;
+        }
+
+    } while (continuar);
+
+    // listar
     listarAlunos(alunos);
 
     // alterar
@@ -288,6 +325,7 @@ void alterarAluno(vector<Aluno> &alunos)
 
                 alunos[index].nota1 = aluno.nota1;
 
+
                 break;
 
             case 2:
@@ -296,6 +334,8 @@ void alterarAluno(vector<Aluno> &alunos)
 
                 alunos[index].nota2 = aluno.nota2;
 
+
+                
                 break;
 
             default:
@@ -304,7 +344,10 @@ void alterarAluno(vector<Aluno> &alunos)
             }
         } while (sair);
 
+
         alunos[index].media = calcularMediaIndividual(aluno);   
+
+
     }
     else
     {
