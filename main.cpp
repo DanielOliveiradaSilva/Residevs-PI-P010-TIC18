@@ -1,341 +1,140 @@
 #include <iostream>
-#include <vector>
 #include <string>
+#include <vector>
 #include <iomanip>
-#define TRACO "---------------------------------------------------------------------------------------------------"
+
 using namespace std;
 
-// Estrutura https://drive.google.com/file/d/1DOSEwaityLckkWh3SqNXxnqVoSlRgQBL/view?usp=sharing
+// Estrutura que armazenará o nome e as 2 notas solicitados na Questão 1º
 struct Aluno
 {
     string nome;
-    double nota1;
-    double nota2;
-    double media;
+    float nota1;
+    float nota2;
 };
-void inserirAluno(vector<Aluno> &alunos, int nAluno);// Insere um aluno e suas notas
-void listarAlunos(vector<Aluno> alunos);              // lista nome, nota1, nota2. Mais pode ser implementado para listar media.
-int buscarAluno(vector<Aluno> &alunos);               // retona o indice do aluno
-void alterarAluno(vector<Aluno> &alunos);             // Precisa atualizar a media quando atualizar a nota? Devo criar uma função para isso?
-void excluirAluno(vector<Aluno> &alunos);             // Precisa reordenar? Mesmo que eu exluia uma valor de uma lista ordenada ela continua ordenada. A esta está ordenada antes de excluir?
-void bubblesort(vector<Aluno> &alunos);               // ordenar em ordem lexografica.
-void incluirParaTeste(vector<Aluno> &alunos);         // Função que insere alguns alunos e suas notas
-double calcularMediaIndividual(Aluno aluno);          // A ideia era usar para inseri a medias de todos os alunos.Mais ṕode ser implementado ou criado outra função para media individual por exemplo.
-void calcularMediaGeral(vector<Aluno> &alunos);       // calcular e alterar a média de todos os alunos
+
+void inserir(vector<Aluno> &alunos);
+void listarResultado(vector<Aluno> &alunos);
+// void bubbleSort(vector<Aluno> &lista);
+// int buscarAluno(const string nome, vector<Aluno> &lista);
+// void removerAluno(const string &nome, vector<Aluno> &lista);
+// void alterarNota(const string &nome, vector<Aluno> &lista, float novaNota1, float novaNota2);
+
 int main()
 {
-    // Fluxograma do algoritmo  https://drive.google.com/file/d/1hmIH267o7IIGC-jx0_fUVAD5jitPDvvV/view
-    char resposta;
-    int quantidadeMaxima;
-    int quantidadeAlunos = 0;
-    bool continuar;
+
+    int n = 0;
+    char confirmar = 's';
     vector<Aluno> alunos;
 
-    cout << "Defina a quantidade máxima de alunos: " << endl;
-    cin >> quantidadeMaxima;
-    // inserir aluno
+    cout << "Quantidade de alunos:";
+    cin >> n;
+
     do
     {
-        if (quantidadeAlunos < quantidadeMaxima)
-        {
-            quantidadeAlunos++;
-            inserirAluno(alunos, quantidadeAlunos);
-            cout << "Deseja incluir mais alunos? (s/n): " << endl;
-            cin >> resposta;
+        if (alunos.size() < n)
+        { // não permite que seja inserido mais que n-1 estudantes
 
-            if (resposta == 's' || resposta == 'S')
-                continuar = true;
-            else
-            {
-                continuar = false;
-            }
+            inserir(alunos); // pedindo o nome as notas e já ordenando.
         }
         else
         {
-            cout << "Ops! Não será possivel continuar. O limite máximo de alunos cadastrados foi atingido." << endl;
-            continuar = false;
-            break;
+            cout << "Capacidade maxima de alunos registrado!" << endl;
         }
+        cout << "\nDeseja incluir mais alunos s/n :"; // permitindo a inclusão de novos alunos
+        cin >> confirmar;                             // permitindo a inclusão de novos alunos
 
+    } while (confirmar == 's' || confirmar == 'S'); // permitindo a inclusão de novos alunos
 
-    } while (continuar);
-
-    // Excluir aluno
-    continuar = true;
-
-    do
-    {
-
-        cout << "Deseja excluir algum alunos? (s/n)?: " << endl;
-        cin >> resposta;
-        if (resposta == 's' || resposta == 'S')
-        {
-            cout << "Insira o nome do aluno que Excluir: ";
-            excluirAluno(alunos);
-        }
-        else
-        {
-            continuar = false;
-        }
-
-    } while (continuar);
-
-    // listar
-    calcularMediaGeral(alunos);
-    listarAlunos(alunos);
-
-    // alterar
-    continuar = true;
-    do
-    {
-        cout << "\n\nDeseja alterar alguma nota? (s/n): ";
-        cin >> resposta;
-        if (resposta == 's' || resposta == 'S')
-        {
-            alterarAluno(alunos);
-        }else{
-            continuar = false;
-        }
-
-
-    } while (continuar);
-
-    // Excluir aluno
-    continuar = true;
-
-    // listar
-    listarAlunos(alunos);
-
-   
-
-    return 0;
-    
+    listarResultado(alunos);
 }
 
-void inserirAluno(vector<Aluno> &alunos, int nAluno){
-    Aluno novoAluno;
-    string nome;
-    double nota1;
-    double nota2;
+// void alterarNota(string &nome, vector<Aluno> &alunos, float novaNota1, float novaNota2)
+// {
+//     int posicao = buscarAluno(nome, alunos);
 
-    do
-    {
-        cout << "Digite o nome do aluno " << nAluno << ":" << endl;
-        cin.ignore();
-        getline(cin, nome);
-    } while (nome == "");
+//     if (posicao != -1)
+//     {
+//         alunos[posicao].nota1 = novaNota1;
+//         alunos[posicao].nota2 = novaNota2;
+//         cout << "Notas do Aluno " << nome << " alteradas com sucesso." << endl;
+//     }
+//     else
+//     {
+//         cout << "Aluno " << nome << " não encontrado na alunos." << endl;
+//     }
+// }
+// void removerAluno(string &nome, vector<Aluno> &alunos) {
+//     int posicao = buscarAluno(nome, alunos);
 
-    cout << "Digite a nota 1: " << endl;
-    cin >> nota1;
-    cout << "Digite a nota 2: " << endl;
-    cin >> nota2;
+//     if (posicao != -1) {
+//         alunos.erase(alunos.begin() + posicao); // Remove o Aluno da posição encontrada
+//         cout << "Aluno " << nome << " removido com sucesso." << endl;
+//     } else {
+//         cout << "Aluno " << nome << " não encontrado na alunos." << endl;
+//     }
+// }
 
-    novoAluno.nome = nome;
-    novoAluno.nota1 = nota1;
-    novoAluno.nota2 = nota2;
-    novoAluno.media = calcularMediaIndividual(novoAluno);
-    alunos.push_back(novoAluno);
-}
-
-void listarAlunos(const vector<Aluno> alunos)
+void listarResultado(vector<Aluno> &alunos)
 {
-    string situacao = "";
-
-    cout << TRACO << endl;
-    cout << left << setw(40) << "NOME" << setw(16) << "NOTA 1" << setw(16) << "NOTA 2" << setw(16) << "MEDIA" << setw(16) << "SITUAÇÃO" << endl;
-    cout << TRACO << endl;
-
-    for (const Aluno &aluno : alunos)
+    cout << "\nLista de Alunos:\n";
+    string mensagem;
+    int posicao = 1;
+    for (const Aluno &a : alunos)
     {
-        situacao = aluno.media < 7 ? "REPROVADO" : "APROVADO";
-        cout << left << setw(40) << aluno.nome << setw(16) << setprecision(2) << aluno.nota1 << setw(16) << setprecision(2) << aluno.nota2 << setw(16) << setprecision(2) << aluno.media << setw(16) << situacao << endl;
-    }
-    cout << TRACO << endl;
+        cout << "Aluno"
+             << "-" << posicao << endl;
+        cout << "Nome: " << a.nome << endl;
+        cout << "Nota1: " << setprecision(2) << a.nota1 << endl;
+        cout << "Nota2: " << setprecision(2) << a.nota1 << endl;
+        cout << "Media: " << setprecision(2) << (a.nota1 + a.nota2) / 2 << endl;
+        cout << "Situação: ";
+        mensagem = ((a.nota1 + a.nota2) / 2 >= 7) ? "Aprovado" : "Reprovado";
+        cout << mensagem << endl;
 
-}
-
-void bubblesort(std::vector<Aluno> &alunos)
-{
-    int resultado;
-    Aluno aux;
-
-    for (auto i = alunos.begin(); i != alunos.end(); ++i)
-    {
-        for (auto j = alunos.begin(); j != alunos.end() - 1; ++j)
-        {
-            resultado = (j + 1)->nome.compare(j->nome);
-
-            if (resultado < 0)
-            {
-                // If aluno at j+1 comes before aluno at j in lexicographic order, swap them
-                aux = *j;
-                *j = *(j + 1);
-                *(j + 1) = aux;
-            }
-        }
-    }
-}
-void incluirParaTeste(vector<Aluno> &alunos)
-{
-    Aluno novo_aluno;
-    //---------------Primeiro Aluno----------------
-    novo_aluno.nome = "Daniel Oliveira da Silva";
-    novo_aluno.nota1 = 8.3;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
-
-    //---------------Segunto Aluno----------------
-    novo_aluno.nome = "Leonardo Garcia";
-    novo_aluno.nota1 = 9.3;
-    novo_aluno.nota2 = 8.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
-
-    //---------------Terceiro Aluno---------------
-    novo_aluno.nome = "Lorena Andrade";
-    novo_aluno.nota1 = 9.8;
-    novo_aluno.nota2 = 6.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim--------------------
-
-    //---------------Quarto Aluno----------------
-    novo_aluno.nome = "Carlos Andre";
-    novo_aluno.nota1 = 8.8;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
-}
-
-int buscarAluno(vector<Aluno> &alunos)
-{
-
-    string nome_aluno;
-    int qtd_alunos = alunos.size();
-    cin.ignore();
-    getline(cin, nome_aluno);
-
-    for (int i = 0; i < qtd_alunos; i++)
-    {
-        if (nome_aluno == alunos[i].nome)
-        {
-            cout << "Aluno encontrado!" << endl;
-            return i;
-        }
-    }
-    cout << "Aluno não encontrado." << endl;
-    return -1;
-}
-
-void excluirAluno(vector<Aluno> &alunos)
-{
-
-    bool para = false;
-    char escolha;
-    do
-    {
-
-        int indice = buscarAluno(alunos);
-
-        if (indice != -1)
-        {
-            alunos.erase(alunos.begin() + indice);
-            cout << "Aluno removido com sucesso!" << endl;
-        }
-        else
-        {
-            cout << "Aluno não encontrado, portanto nenhum aluno foi removido." << endl;
-        }
-        cout << "Deseja excluir mais algum aluno? (s/n): ";
-        cin >> escolha;
-
-        if (escolha != 's' && escolha != 'S')
-        {
-            cout << "\n\nInforme o nome do aluno que deseja Excluir: " << endl;
-            para = true;
-        }
-    } while (para == false);
-}
-
-void alterarAluno(vector<Aluno> &alunos)
-{
-    bool sair = true;
-    int opcao;
-    string nome;
-    Aluno aluno;
-    int index;
-
-    cout << "Insira o nome do aluno que deseja alterar: ";
-    index = buscarAluno(alunos);
-    if (index >= 0)
-    {
-        aluno = alunos[index];
-
-        do
-        {
-            cout << "\n\nAluno: " << aluno.nome << endl;
-            cout << "\nNota 1: " << aluno.nota1 << endl;
-            cout << "\nNota 2: " << aluno.nota2 << endl;
-
-        
-            cout << "\n\n[ 1 ] Alterar primeira nota\n";
-            cout << "\n[ 2 ] Alterar segunda nota\n";
-            cout << "\n[ 0 ] Nenhuma nota\n";
-
-            cout << "\nOpção: ";
-            cin >> opcao;
-
-            switch (opcao){
-            case 1:
-                cout << "\n\nNota 1: ";
-                cin >> aluno.nota1;
-
-                alunos[index].nota1 = aluno.nota1;
-
-
-                break;
-
-            case 2:
-                cout << "\n\nNota 2: ";
-                cin >> aluno.nota2;
-
-                alunos[index].nota2 = aluno.nota2;
-
-
-                
-                break;
-
-            default:
-               sair = false;
-               break;
-            }
-        } while (sair);
-
-
-        alunos[index].media = calcularMediaIndividual(aluno);   
-
-
-    }
-    else
-    {
-        cout << "Aluno não encontrado." << endl;
+        posicao++;
     }
 }
 
-double calcularMediaIndividual(Aluno aluno) 
-{
-    aluno.media = (aluno.nota1 + aluno.nota2) / 2;
+// int buscarAluno(string nome, vector<Aluno> &alunos){
+//     int quantidade = alunos.size();
 
-    return aluno.media;
-};
+//     for (int i = 0; i < quantidade ; i++){
+//        if (nome == alunos[i].nome){
+//          return i;
+//        }
 
-void calcularMediaGeral(vector<Aluno> &alunos) 
-{
-    for ( Aluno aluno: alunos ) {
-        aluno.media = (aluno.nota1 + aluno.nota2) / 2;
-    }
-};
+//     }
+//     return -1;
+// }
+
+// void inserir(vector<Aluno> &alunos){
+
+//     Aluno novo_aluno;
+
+//     cout << "Digite o nome do Aluno:\n";
+//     cin.ignore(); // Limpar o buffer de entrada antes de ler a linha completa
+//     getline(cin, novo_aluno.nome);//para ler o nome completo do Aluno, permitindo espaços.
+//     cout << "Digite a nota 1: ";
+//     cin >> novo_aluno.nota1;
+//     cout << "Digite a nota 2: ";
+//     cin >> novo_aluno.nota2;
+//     alunos.push_back(novo_aluno);
+
+// }
+
+// void bubbleSort(vector<Aluno> &alunos) { //ordena alunos;
+//     int n = alunos.size();
+//     bool trocou;
+
+//     do {
+//         trocou = false;
+
+//         for (int i = 0; i < n - 1; i++) {
+//             if (alunos[i].nome > alunos[i + 1].nome) {
+//                 swap(alunos[i], alunos[i + 1]);
+//                 trocou = true;
+//             }
+//         }
+//     } while (trocou);
+// }
