@@ -19,7 +19,6 @@ int buscarAluno(vector<Aluno> &alunos);               // retona o indice do alun
 void alterarAluno(vector<Aluno> &alunos);             // Precisa atualizar a media quando atualizar a nota? Devo criar uma função para isso?
 void excluirAluno(vector<Aluno> &alunos);             // Precisa reordenar? Mesmo que eu exluia uma valor de uma lista ordenada ela continua ordenada. A esta está ordenada antes de excluir?
 void bubblesort(vector<Aluno> &alunos);               // ordenar em ordem lexografica.
-void incluirParaTeste(vector<Aluno> &alunos);         // Função que insere alguns alunos e suas notas
 double calcularMediaIndividual(Aluno aluno);          // A ideia era usar para inseri a medias de todos os alunos.Mais ṕode ser implementado ou criado outra função para media individual por exemplo.
 void calcularMediaGeral(vector<Aluno> &alunos);       // calcular e alterar a média de todos os alunos
 int main()
@@ -174,41 +173,6 @@ void bubblesort(std::vector<Aluno> &alunos)
             }
         }
     }
-}
-void incluirParaTeste(vector<Aluno> &alunos)
-{
-    Aluno novo_aluno;
-    //---------------Primeiro Aluno----------------
-    novo_aluno.nome = "Daniel Oliveira da Silva";
-    novo_aluno.nota1 = 8.3;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
-
-    //---------------Segunto Aluno----------------
-    novo_aluno.nome = "Leonardo Garcia";
-    novo_aluno.nota1 = 9.3;
-    novo_aluno.nota2 = 8.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
-
-    //---------------Terceiro Aluno---------------
-    novo_aluno.nome = "Lorena Andrade";
-    novo_aluno.nota1 = 9.8;
-    novo_aluno.nota2 = 6.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim--------------------
-
-    //---------------Quarto Aluno----------------
-    novo_aluno.nome = "Carlos Andre";
-    novo_aluno.nota1 = 8.8;
-    novo_aluno.nota2 = 7.4;
-    novo_aluno.media = (novo_aluno.nota1 + novo_aluno.nota2) / 2;
-    alunos.push_back(novo_aluno); // inserção.
-    //--------------------Fim---------------------
 }
 
 int buscarAluno(vector<Aluno> &alunos)
