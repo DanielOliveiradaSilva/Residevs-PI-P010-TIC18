@@ -13,7 +13,7 @@ struct Aluno
     double nota2;
     double media;
 };
-void inserirAluno(vector<Aluno> &alunos, int nAluno); // Insere um aluno e suas notas
+void inserirAluno(vector<Aluno> &alunos, int nAluno);// Insere um aluno e suas notas
 void listarAlunos(vector<Aluno> alunos);              // lista nome, nota1, nota2. Mais pode ser implementado para listar media.
 int buscarAluno(vector<Aluno> &alunos);               // retona o indice do aluno
 void alterarAluno(vector<Aluno> &alunos);             // Precisa atualizar a media quando atualizar a nota? Devo criar uma função para isso?
@@ -92,7 +92,10 @@ int main()
         cin >> resposta;
         if (resposta == 's' || resposta == 'S')
         {
-
+            alterarAluno(alunos);
+        }else{
+            continuar = false;
+        }
 
 
     } while (continuar);
@@ -100,49 +103,16 @@ int main()
     // Excluir aluno
     continuar = true;
 
-    do
-    {
-
-        cout << "Deseja excluir algum alunos? (s/n)?: " << endl;
-        cin >> resposta;
-        if (resposta == 's' || resposta == 'S')
-        {
-            cout << "Insira o nome do aluno que Excluir: ";
-            excluirAluno(alunos);
-        }
-        else
-        {
-            continuar = false;
-        }
-
-    } while (continuar);
-
     // listar
     listarAlunos(alunos);
 
-    // alterar
-    continuar = true;
-    do
-    {
-        cout << "\n\nDeseja alterar alguma nota? (s/n): ";
-        cin >> resposta;
-        if (resposta == 's' || resposta == 'S')
-        {
-
-            alterarAluno(alunos);
-        }
-        else
-        {
-            continuar = false;
-        }
-
-    } while (continuar);
+   
 
     return 0;
+    
 }
 
-void inserirAluno(vector<Aluno> &alunos, int nAluno)
-{
+void inserirAluno(vector<Aluno> &alunos, int nAluno){
     Aluno novoAluno;
     string nome;
     double nota1;
@@ -166,6 +136,7 @@ void inserirAluno(vector<Aluno> &alunos, int nAluno)
     novoAluno.media = calcularMediaIndividual(novoAluno);
     alunos.push_back(novoAluno);
 }
+
 void listarAlunos(const vector<Aluno> alunos)
 {
     string situacao = "";
